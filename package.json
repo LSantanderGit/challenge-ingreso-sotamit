@@ -5,14 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node backend/src/index.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node backend/src/index.js",
+    "client": "cd frontend && ng serve"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.3.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }

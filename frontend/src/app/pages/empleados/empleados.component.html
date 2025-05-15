@@ -1,0 +1,58 @@
+<div class="container my-5 d-flex justify-content-center">
+	<div class="card w-100 shadow" style="max-width: 900px;">
+	<div class="card-header bg-primary text-white text-center">
+		<h4 class="mb-0">Lista de Empleados</h4>
+	</div>
+
+	<div class="card-body">
+		<div class="text-center my-5" *ngIf="cargando">
+		<div class="spinner-border text-primary" role="status">
+			<span class="visually-hidden">Cargando...</span>
+		</div>
+		<p class="mt-2">Cargando empleados...</p>
+		</div>
+
+		<div *ngIf="datosCargados" class="table-responsive">
+		<table class="table table-striped table-bordered mb-0">
+			<thead class="table-light">
+			<tr>
+				<th>Nombre</th>
+				<th>Documento</th>
+				<th>Fecha Nac.</th>
+				<th>Desarro.</th>
+				<th>Descripción</th>
+				<th>Área</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr *ngIf="empleadosPaginados.length === 0">
+				<td colspan="6" class="text-center text-muted">No hay empleados disponibles.</td>
+			</tr>
+			<tr *ngFor="let empleado of empleadosPaginados">
+				<td>{{ empleado.nombreCompleto }}</td>
+				<td>{{ empleado.documento }}</td>
+				<td>{{ empleado.fechaNacimiento }}</td>
+				<td>{{ empleado.esDesarrollador ? 'Sí' : 'No' }}</td>
+				<td>{{ empleado.descripcion }}</td>
+				<td>{{ empleado.areaNombre}}</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<nav class="mt-4" aria-label="Paginación de empleados">
+			<ul class="pagination justify-content-center mb-0">
+			<li class="page-item" [class.disabled]="pagina === 1">
+				<button class="page-link" (click)="cambiarPagina(pagina - 1)">Anterior</button>
+			</li>
+			<li class="page-item disabled">
+				<span class="page-link">Página {{ pagina }} de {{ totalPaginas }}</span>
+			</li>
+			<li class="page-item" [class.disabled]="pagina === totalPaginas">
+				<button class="page-link" (click)="cambiarPagina(pagina + 1)">Siguiente</button>
+			</li>
+			</ul>
+		</nav>
+		</div>
+	</div>
+	</div>
+</div>
