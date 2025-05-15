@@ -52,6 +52,24 @@ app.get('/empleados', async (req, res) => {
 	}
 });
 
+app.get('/getAreas', async (req, res) => {
+	try {
+		const resultado = await pool.query(
+			`SELECT
+				ID,
+				NOMBRE
+			FROM
+				AREA
+			ORDER BY
+				NOMBRE;`
+		);
+		res.json(resultado.rows);
+	} catch (error) {
+		console.error('Error al obtener áreas:', error);
+		res.status(500).json({ error: 'Error al obtener áreas' });
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Servidor corriendo en http://localhost:${port}`);
 });

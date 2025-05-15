@@ -1,0 +1,48 @@
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card w-100 shadow" style="max-width: 600px;">
+    <div class="card-header bg-secondary text-white text-center">
+        <h5 class="mb-0">{{ readonly ? 'Ver Empleado' : initialData ? 'Editar Empleado' : 'Nuevo Empleado' }}</h5>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3">
+            <label>Nombre completo</label>
+            <input formControlName="nombreCompleto" class="form-control" [readonly]="readonly">
+        </div>
+
+        <div class="mb-3">
+            <label>Documento</label>
+            <input formControlName="documento" class="form-control" [readonly]="readonly">
+        </div>
+
+        <div class="mb-3">
+            <label>Fecha de nacimiento</label>
+            <input formControlName="fechaNacimiento" type="date" class="form-control" [readonly]="readonly">
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" formControlName="esDesarrollador" class="form-check-input" [disabled]="readonly">
+            <label class="form-check-label">¿Es desarrollador?</label>
+        </div>
+
+        <div class="mb-3">
+            <label>Descripción</label>
+            <textarea formControlName="descripcion" class="form-control" rows="3" [readonly]="readonly"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>Área</label>
+            <select formControlName="areaId" class="form-select" [disabled]="readonly">
+            <option value="" disabled>Seleccione un área</option>
+            <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
+            </select>
+        </div>
+
+        <div class="text-center" *ngIf="!readonly">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
