@@ -1,69 +1,81 @@
 <div class="container my-5 d-flex justify-content-center">
     <div class="card w-100 shadow" style="max-width: 600px;">
-    <div class="card-header bg-secondary text-white text-center">
-        <h5 class="mb-0">{{ readonly ? 'Ver Empleado' : initialData ? 'Editar Empleado' : 'Nuevo Empleado' }}</h5>
-    </div>
-
-    <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="mb-3">
-            <label>Nombre completo (*)</label>
-                <input
-                    formControlName="nombreCompleto"
-                    class="form-control"
-                    [class.is-invalid]="form.get('nombreCompleto')?.invalid && form.get('nombreCompleto')?.touched"
-                />
+        <div class="card-header bg-secondary text-white text-center">
+            <h5 class="mb-0">{{ readonly ? 'Ver Empleado' : initialData ? 'Editar Empleado' : 'Nuevo Empleado' }}</h5>
         </div>
 
-        <div class="mb-3">
-            <label>Documento (*)</label>
-            <input
-                formControlName="documento"
-                class="form-control"
-                [class.is-invalid]="form.get('documento')?.invalid && form.get('documento')?.touched"
-            />
-        </div>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="mb-3">
+                    <label>Nombre completo (*)</label>
+                        <input
+                            formControlName="nombreCompleto"
+                            class="form-control"
+                            [class.is-invalid]="form.get('nombreCompleto')?.invalid && form.get('nombreCompleto')?.touched"
+                        />
+                </div>
 
-        <div class="mb-3">
-            <label>Fecha de nacimiento (*)</label>
-            <input
-                type="date"
-                [max]="hoy"
-                formControlName="fechaNacimiento"
-                class="form-control"
-                [class.is-invalid]="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched"
-            />
-        </div>
+                <div class="mb-3">
+                    <label>Documento (*)</label>
+                    <input
+                        formControlName="documento"
+                        class="form-control"
+                        [class.is-invalid]="form.get('documento')?.invalid && form.get('documento')?.touched"
+                    />
+                </div>
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" formControlName="esDesarrollador" class="form-check-input">
-            <label class="form-check-label">¿Es desarrollador?</label>
-        </div>
+                <div class="mb-3">
+                    <label>Fecha de nacimiento (*)</label>
+                    <input
+                        type="date"
+                        [max]="hoy"
+                        formControlName="fechaNacimiento"
+                        class="form-control"
+                        [class.is-invalid]="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched"
+                    />
+                </div>
 
-        <div class="mb-3">
-            <label>Descripción</label>
-            <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
-        </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" formControlName="esDesarrollador" class="form-check-input">
+                    <label class="form-check-label">¿Es desarrollador?</label>
+                </div>
 
-        <div class="mb-3">
-            <label>Área (*)</label>
-            <select
-                formControlName="areaId"
-                class="form-select"
-                [class.is-invalid]="form.get('areaId')?.invalid && form.get('areaId')?.touched"
-                >
-                <option value="" disabled>Seleccione un área</option>
-                <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
-            </select>
-        </div>
+                <div class="mb-3">
+                    <label>Descripción</label>
+                    <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                </div>
 
-        <div *ngIf="form.invalid && form.touched" class="alert alert-danger text-center">
-            Por favor completá los campos obligatorios marcados con (*)
+                <div class="mb-3">
+                    <label>Área (*)</label>
+                    <select
+                        formControlName="areaId"
+                        class="form-select"
+                        [class.is-invalid]="form.get('areaId')?.invalid && form.get('areaId')?.touched"
+                        >
+                        <option value="" disabled>Seleccione un área</option>
+                        <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4" *ngIf="!readonly">
+                    <button type="button" class="btn btn-secondary" (click)="volver()">
+                        Volver
+                    </button>
+                    <div>
+                        <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid">
+                            Guardar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-outline-danger"
+                            *ngIf="initialData?.id"
+                            (click)="eliminar()"
+                        >
+                        Eliminar
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="text-center" *ngIf="!readonly">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-        </form>
-    </div>
     </div>
 </div>

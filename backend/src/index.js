@@ -146,6 +146,21 @@ app.put('/empleados/update/:id', async (req, res) => {
 	}
 });
 
+app.delete('/empleados/delete/:id', async (req, res) => {
+	const id = req.params.id;
+	try {
+		const result = await pool.query(`DELETE FROM empleado WHERE id = $1`, [id]);
+		if (result.rowCount === 0) {
+			return res.status(404).json({ error: 'Empleado no encontrado' });
+		}
+	
+		res.status(204).send();
+	} catch (error) {
+		console.error('Error al eliminar empleado:', error);
+		res.status(500).json({ error: 'Error interno al eliminar empleado' });
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Servidor corriendo en http://localhost:${port}`);
 });

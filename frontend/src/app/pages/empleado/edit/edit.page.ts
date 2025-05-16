@@ -14,6 +14,7 @@ export class EmpleadoEditPage implements OnInit {
     empleadoId: string = '';
     empleadoData: any = null;
     cargando = true;
+    eliminando = false;
 
     constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
@@ -38,6 +39,19 @@ export class EmpleadoEditPage implements OnInit {
         this.http.put(`http://localhost:3000/empleados/update/${this.empleadoId}`, data).subscribe({
             next: () => this.router.navigate(['/empleados/list']),
             error: err => console.error('Error al actualizar empleado:', err)
+        });
+    }
+
+    eliminarEmpleado(): void {
+        this.http.delete(`http://localhost:3000/empleados/delete/${this.empleadoId}`).subscribe({
+            next: () => {
+                this.router.navigate(['/empleados/list'], {
+                    queryParams: { mensaje: 'Empleado eliminado correctamente' }
+                });
+            },
+            error: err => {
+                console.error('Error al eliminar empleado:', err);
+            }
         });
     }
 }

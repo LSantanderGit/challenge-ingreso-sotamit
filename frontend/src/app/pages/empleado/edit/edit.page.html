@@ -2,7 +2,8 @@
     <app-empleado-form
     [initialData]="empleadoData"
     [readonly]="false"
-    (onSubmit)="actualizarEmpleado($event)">
+    (onSubmit)="actualizarEmpleado($event)"
+    (onDelete)="eliminarEmpleado()">
     </app-empleado-form>
 </div>
 
