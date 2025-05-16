@@ -1,78 +1,96 @@
 <div class="container my-5 d-flex justify-content-center">
     <div class="card w-100 shadow" style="max-width: 600px;">
         <div class="card-header bg-secondary text-white text-center">
-            <h5 class="mb-0">{{ readonly ? 'Ver Empleado' : initialData ? 'Editar Empleado' : 'Nuevo Empleado' }}</h5>
+            <h5 class="mb-0">
+            {{ readonly ? 'Ver Empleado' : initialData ? 'Editar Empleado' : 'Nuevo Empleado' }}
+            </h5>
         </div>
 
         <div class="card-body">
             <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="mb-3">
                     <label>Nombre completo (*)</label>
-                        <input
-                            formControlName="nombreCompleto"
-                            class="form-control"
-                            [class.is-invalid]="form.get('nombreCompleto')?.invalid && form.get('nombreCompleto')?.touched"
-                        />
+                    <input
+                    formControlName="nombreCompleto"
+                    class="form-control"
+                    [class.is-invalid]="form.get('nombreCompleto')?.invalid && (form.get('nombreCompleto')?.touched || form.touched)"
+                    />
+                    <div class="text-danger small mt-1" *ngIf="form.get('nombreCompleto')?.invalid && (form.get('nombreCompleto')?.touched || form.touched)">
+                    El nombre completo es obligatorio.
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label>Documento (*)</label>
                     <input
-                        formControlName="documento"
-                        class="form-control"
-                        [class.is-invalid]="form.get('documento')?.invalid && form.get('documento')?.touched"
+                    formControlName="documento"
+                    class="form-control"
+                    [class.is-invalid]="form.get('documento')?.invalid && (form.get('documento')?.touched || form.touched)"
                     />
+                    <div class="text-danger small mt-1" *ngIf="form.get('documento')?.invalid && (form.get('documento')?.touched || form.touched)">
+                    El documento es obligatorio.
+                    </div>
                 </div>
 
                 <div class="mb-3">
                     <label>Fecha de nacimiento (*)</label>
                     <input
-                        type="date"
-                        [max]="hoy"
-                        formControlName="fechaNacimiento"
-                        class="form-control"
-                        [class.is-invalid]="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched"
+                    type="date"
+                    [max]="hoy"
+                    formControlName="fechaNacimiento"
+                    class="form-control"
+                    [class.is-invalid]="form.get('fechaNacimiento')?.invalid && (form.get('fechaNacimiento')?.touched || form.touched)"
                     />
+                    <div class="text-danger small mt-1" *ngIf="form.get('fechaNacimiento')?.invalid && (form.get('fechaNacimiento')?.touched || form.touched)">
+                    La fecha de nacimiento es obligatoria.
+                    </div>
                 </div>
 
                 <div class="mb-3 form-check">
-                    <input type="checkbox" formControlName="esDesarrollador" class="form-check-input">
+                    <input
+                    type="checkbox"
+                    formControlName="esDesarrollador"
+                    class="form-check-input"
+                    />
                     <label class="form-check-label">¿Es desarrollador?</label>
                 </div>
 
                 <div class="mb-3">
                     <label>Descripción</label>
-                    <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                    <textarea
+                    formControlName="descripcion"
+                    class="form-control"
+                    rows="3"
+                    ></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label>Área (*)</label>
                     <select
-                        formControlName="areaId"
-                        class="form-select"
-                        [class.is-invalid]="form.get('areaId')?.invalid && form.get('areaId')?.touched"
-                        >
-                        <option value="" disabled>Seleccione un área</option>
-                        <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
+                    formControlName="areaId"
+                    class="form-select"
+                    [class.is-invalid]="form.get('areaId')?.invalid && (form.get('areaId')?.touched || form.touched)"
+                    >
+                    <option value="" disabled>Seleccione un área</option>
+                    <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
                     </select>
+                    <div class="text-danger small mt-1" *ngIf="form.get('areaId')?.invalid && (form.get('areaId')?.touched || form.touched)">
+                    El área es obligatoria.
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-between mt-4" *ngIf="!readonly">
-                    <button type="button" class="btn btn-secondary" (click)="volver()">
-                        Volver
-                    </button>
+                    <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
                     <div>
-                        <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid">
-                            Guardar
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-outline-danger"
-                            *ngIf="initialData?.id"
-                            (click)="eliminar()"
-                        >
+                    <button type="submit" class="btn btn-primary me-2">Guardar</button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        *ngIf="initialData?.id"
+                        (click)="eliminar()"
+                    >
                         Eliminar
-                        </button>
+                    </button>
                     </div>
                 </div>
             </form>
