@@ -34,7 +34,7 @@
 			<tr *ngIf="empleadosPaginados.length === 0">
 				<td colspan="6" class="text-center text-muted">No hay empleados disponibles.</td>
 			</tr>
-			<tr *ngFor="let empleado of empleadosPaginados">
+			<tr *ngFor="let empleado of empleadosPaginados" (click)="editarEmpleado(empleado.id)" style="cursor: pointer;">
 				<td>{{ empleado.nombreCompleto }}</td>
 				<td>{{ empleado.documento }}</td>
 				<td>{{ empleado.fechaNacimiento }}</td>

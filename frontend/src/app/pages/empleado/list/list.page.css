@@ -1,0 +1,15 @@
+.flash-overlay {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 300px;
+    max-width: 80%;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: none; /* no interfiere con clicks */
+}
+.flash-overlay.fade-out {
+    opacity: 0;
+}

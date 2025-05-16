@@ -24,15 +24,15 @@ export class EmpleadosListComponent {
 
 	ngOnInit() {
 		this.http.get<any[]>('http://localhost:3000/empleados/list').subscribe(data => {
-		this.empleados = data;
-		this.totalPaginas = Math.ceil(this.empleados.length / this.limite) || 1;
-		this.cargando = false;
-		this.datosCargados = true;
-		this.actualizarPaginacion();
+			this.empleados = data;
+			this.totalPaginas = Math.ceil(this.empleados.length / this.limite) || 1;
+			this.cargando = false;
+			this.datosCargados = true;
+			this.actualizarPaginacion();
 		}, error => {
-		this.cargando = false;
-		this.datosCargados = true;
-		this.empleados = [];
+			this.cargando = false;
+			this.datosCargados = true;
+			this.empleados = [];
 		});
 	}
 
@@ -50,5 +50,9 @@ export class EmpleadosListComponent {
 
 	crearEmpleado() {
 		this.router.navigate(['/empleados/create']);
+	}
+
+	editarEmpleado(id: number) {
+		this.router.navigate(['/empleados/edit', id]);
 	}
 }

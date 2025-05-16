@@ -1,3 +1,11 @@
+<div
+    *ngIf="mensajeFlash"
+    class="flash-overlay alert alert-warning text-center"
+    role="alert"
+    [ngClass]="fadeClass"
+>
+    {{ mensajeFlash }}
+</div>
 <div class="container py-5">
     <app-empleados-list></app-empleados-list>
 </div>

@@ -75,21 +75,74 @@ app.post('/empleados/save', async (req, res) => {
 
 	try {
 		const resultado = await pool.query(`
-		INSERT INTO empleado (
-			nombre_completo,
-			documento_identidad,
-			fecha_nacimiento,
-			es_desarrollador,
-			descripcion,
-			area_id
-		) VALUES ($1, $2, $3, $4, $5, $6)
-		RETURNING *;
+			INSERT INTO empleado (
+				nombre_completo,
+				documento_identidad,
+				fecha_nacimiento,
+				es_desarrollador,
+				descripcion,
+				area_id
+			) VALUES ($1, $2, $3, $4, $5, $6)
+			RETURNING *;
 		`, [nombreCompleto, documento, fechaNacimiento, esDesarrollador, descripcion, areaId]);
 
 		res.status(201).json(resultado.rows[0]);
 	} catch (error) {
 		console.error('Error al crear empleado:', error);
 		res.status(500).json({ error: 'Error al crear empleado' });
+	}
+});
+
+app.get('/empleados/edit/:id', async (req, res) => {
+	const id = req.params.id;
+	try {
+		const result = await pool.query(`
+			SELECT
+				ID,
+				NOMBRE_COMPLETO AS "nombreCompleto",
+				DOCUMENTO_IDENTIDAD AS "documento",
+				TO_CHAR(FECHA_NACIMIENTO, 'YYYY-MM-DD') AS "fechaNacimiento",
+				ES_DESARROLLADOR AS "esDesarrollador",
+				DESCRIPCION,
+				AREA_ID AS "areaId"
+			FROM
+				EMPLEADO
+			WHERE
+				ID = $1
+		`, [id]);
+
+		if (result.rows.length === 0) return res.status(404).json({ error: 'Empleado no encontrado' });
+
+		res.json(result.rows[0]);
+	} catch (error) {
+		console.error('Error al obtener empleado:', error);
+		res.status(500).json({ error: 'Error interno al obtener empleado' });
+	}
+});
+
+app.put('/empleados/update/:id', async (req, res) => {
+	const id = req.params.id;
+	const { nombreCompleto, documento, fechaNacimiento, esDesarrollador, descripcion, areaId } = req.body;
+
+	try {
+		const result = await pool.query(`
+			UPDATE empleado
+			SET nombre_completo = $1,
+				documento_identidad = $2,
+				fecha_nacimiento = $3,
+				es_desarrollador = $4,
+				descripcion = $5,
+				area_id = $6
+			WHERE id = $7
+			RETURNING *;
+		`, [nombreCompleto, documento, fechaNacimiento, esDesarrollador, descripcion, areaId, id]);
+
+		if (result.rowCount === 0) return res.status(404).json({ error: 'Empleado no encontrado' });
+
+		res.json(result.rows[0]);
+	} catch (error) {
+		console.error('Error al actualizar empleado:', error);
+		res.status(500).json({ error: 'Error interno al actualizar empleado' });
 	}
 });
 
