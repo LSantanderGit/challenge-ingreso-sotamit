@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.get('/empleados', async (req, res) => {
+app.get('/empleados/list', async (req, res) => {
 	try {
 		const resultado = await pool.query(`
 			SELECT
@@ -52,7 +52,7 @@ app.get('/empleados', async (req, res) => {
 	}
 });
 
-app.get('/getAreas', async (req, res) => {
+app.get('/empleados/getAreas', async (req, res) => {
 	try {
 		const resultado = await pool.query(
 			`SELECT

@@ -15,8 +15,8 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-empleado-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './empleado-form.component.html',
-  styleUrls: ['./empleado-form.component.css']
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css']
 })
 export class EmpleadoFormComponent implements OnInit, OnChanges {
   @Input() initialData: any = null;
@@ -38,8 +38,7 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // Cargar áreas
-    this.http.get<any[]>('http://localhost:3000/areas').subscribe(data => {
+    this.http.get<any[]>('http://localhost:3000/empleados/getAreas').subscribe(data => {
       this.areas = data;
     });
 

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmpleadosComponent } from './pages/empleados/empleados.component';
+import { EmpleadosListPage } from './pages/empleado/list/list.page'; // nuevo
 
 export const routes: Routes = [
-	{ path: 'empleados', component: EmpleadosComponent },
-	{ path: '', redirectTo: 'empleados', pathMatch: 'full' },
-	{ path: '**', redirectTo: 'empleados' }
+	{ path: 'empleados/list', component: EmpleadosListPage },
+	{ path: '', redirectTo: 'empleados/list', pathMatch: 'full' },
+	{ path: '**', redirectTo: 'empleados/list' }
 ];
 
 @NgModule({

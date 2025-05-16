@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-	selector: 'app-empleados',
+	selector: 'app-empleados-list',
 	standalone: true,
 	imports: [CommonModule],
-	templateUrl: './empleados.component.html',
-	styleUrls: ['./empleados.component.css']
+	templateUrl: './list.component.html',
+	styleUrls: ['./list.component.css']
 })
-export class EmpleadosComponent {
+export class EmpleadosListComponent {
 	empleados: any[] = [];
 	empleadosPaginados: any[] = [];
 	pagina: number = 1;
@@ -22,7 +22,7 @@ export class EmpleadosComponent {
 	constructor(private http: HttpClient) {}
 
 	ngOnInit() {
-		this.http.get<any[]>('http://localhost:3000/empleados').subscribe(data => {
+		this.http.get<any[]>('http://localhost:3000/empleados/list').subscribe(data => {
 		this.empleados = data;
 		this.totalPaginas = Math.ceil(this.empleados.length / this.limite) || 1;
 		this.cargando = false;
