@@ -23,6 +23,9 @@ async function crearTablas() {
 			);
 		`);
 
+		await pool.query(`SELECT setval('empleado_id_seq', (SELECT COALESCE(MAX(id), 0) FROM empleado))`);
+		await pool.query(`SELECT setval('area_id_seq', (SELECT COALESCE(MAX(id), 0) FROM area))`);
+
 	} catch (err) {
 		console.error("Error al crear las tablas:", err);
 	}
