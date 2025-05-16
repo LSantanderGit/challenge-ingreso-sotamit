@@ -70,6 +70,29 @@ app.get('/empleados/getAreas', async (req, res) => {
 	}
 });
 
+app.post('/empleados/save', async (req, res) => {
+	const { nombreCompleto, documento, fechaNacimiento, esDesarrollador, descripcion, areaId } = req.body;
+
+	try {
+		const resultado = await pool.query(`
+		INSERT INTO empleado (
+			nombre_completo,
+			documento_identidad,
+			fecha_nacimiento,
+			es_desarrollador,
+			descripcion,
+			area_id
+		) VALUES ($1, $2, $3, $4, $5, $6)
+		RETURNING *;
+		`, [nombreCompleto, documento, fechaNacimiento, esDesarrollador, descripcion, areaId]);
+
+		res.status(201).json(resultado.rows[0]);
+	} catch (error) {
+		console.error('Error al crear empleado:', error);
+		res.status(500).json({ error: 'Error al crear empleado' });
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Servidor corriendo en http://localhost:${port}`);
 });

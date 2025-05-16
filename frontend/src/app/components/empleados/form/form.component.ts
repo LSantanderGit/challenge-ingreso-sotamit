@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-empleado-form',
@@ -25,19 +26,23 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
 
   form: FormGroup;
   areas: any[] = [];
+  hoy: string = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.form = this.fb.group({
-      nombreCompleto: [''],
-      documento: [''],
-      fechaNacimiento: [''],
+      nombreCompleto: ['', Validators.required],
+      documento: ['', Validators.required],
+      fechaNacimiento: ['', Validators.required],
       esDesarrollador: [false],
       descripcion: [''],
-      areaId: ['']
+      areaId: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
+    const hoyDate = new Date();
+    this.hoy = hoyDate.toISOString().split('T')[0];
+
     this.http.get<any[]>('http://localhost:3000/empleados/getAreas').subscribe(data => {
       this.areas = data;
     });
@@ -66,8 +71,13 @@ export class EmpleadoFormComponent implements OnInit, OnChanges {
   }
 
   submit(): void {
-    if (this.form.valid && !this.readonly) {
-      this.onSubmit.emit(this.form.value);
+    if (this.readonly) return;
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+
+    this.onSubmit.emit(this.form.value);
   }
 }

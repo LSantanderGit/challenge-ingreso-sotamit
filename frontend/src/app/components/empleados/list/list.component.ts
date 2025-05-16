@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -19,7 +20,7 @@ export class EmpleadosListComponent {
 	cargando = true;
 	datosCargados = false;
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private router: Router) {}
 
 	ngOnInit() {
 		this.http.get<any[]>('http://localhost:3000/empleados/list').subscribe(data => {
@@ -45,5 +46,9 @@ export class EmpleadosListComponent {
 		const inicio = (this.pagina - 1) * this.limite;
 		const fin = inicio + this.limite;
 		this.empleadosPaginados = this.empleados.slice(inicio, fin);
+	}
+
+	crearEmpleado() {
+		this.router.navigate(['/empleados/create']);
 	}
 }

@@ -7,38 +7,59 @@
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="mb-3">
-            <label>Nombre completo</label>
-            <input formControlName="nombreCompleto" class="form-control" [readonly]="readonly">
+            <label>Nombre completo (*)</label>
+                <input
+                    formControlName="nombreCompleto"
+                    class="form-control"
+                    [class.is-invalid]="form.get('nombreCompleto')?.invalid && form.get('nombreCompleto')?.touched"
+                />
         </div>
 
         <div class="mb-3">
-            <label>Documento</label>
-            <input formControlName="documento" class="form-control" [readonly]="readonly">
+            <label>Documento (*)</label>
+            <input
+                formControlName="documento"
+                class="form-control"
+                [class.is-invalid]="form.get('documento')?.invalid && form.get('documento')?.touched"
+            />
         </div>
 
         <div class="mb-3">
-            <label>Fecha de nacimiento</label>
-            <input formControlName="fechaNacimiento" type="date" class="form-control" [readonly]="readonly">
+            <label>Fecha de nacimiento (*)</label>
+            <input
+                type="date"
+                [max]="hoy"
+                formControlName="fechaNacimiento"
+                class="form-control"
+                [class.is-invalid]="form.get('fechaNacimiento')?.invalid && form.get('fechaNacimiento')?.touched"
+            />
         </div>
 
         <div class="mb-3 form-check">
-            <input type="checkbox" formControlName="esDesarrollador" class="form-check-input" [disabled]="readonly">
+            <input type="checkbox" formControlName="esDesarrollador" class="form-check-input">
             <label class="form-check-label">¿Es desarrollador?</label>
         </div>
 
         <div class="mb-3">
             <label>Descripción</label>
-            <textarea formControlName="descripcion" class="form-control" rows="3" [readonly]="readonly"></textarea>
+            <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
         </div>
 
         <div class="mb-3">
-            <label>Área</label>
-            <select formControlName="areaId" class="form-select" [disabled]="readonly">
-            <option value="" disabled>Seleccione un área</option>
-            <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
+            <label>Área (*)</label>
+            <select
+                formControlName="areaId"
+                class="form-select"
+                [class.is-invalid]="form.get('areaId')?.invalid && form.get('areaId')?.touched"
+                >
+                <option value="" disabled>Seleccione un área</option>
+                <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
             </select>
         </div>
 
+        <div *ngIf="form.invalid && form.touched" class="alert alert-danger text-center">
+            Por favor completá los campos obligatorios marcados con (*)
+        </div>
         <div class="text-center" *ngIf="!readonly">
             <button type="submit" class="btn btn-primary">Guardar</button>
         </div>

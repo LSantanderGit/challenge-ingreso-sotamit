@@ -12,6 +12,12 @@
 		<p class="mt-2">Cargando empleados...</p>
 		</div>
 
+		<div class="d-flex justify-content-end mb-3" *ngIf="datosCargados">
+			<button class="btn btn-success" (click)="crearEmpleado()">
+				Agregar
+			</button>
+		</div>
+
 		<div *ngIf="datosCargados" class="table-responsive">
 		<table class="table table-striped table-bordered mb-0">
 			<thead class="table-light">
