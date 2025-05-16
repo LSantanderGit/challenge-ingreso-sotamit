@@ -12,10 +12,9 @@
 		<p class="mt-2">Cargando empleados...</p>
 		</div>
 
-		<div class="d-flex justify-content-end mb-3" *ngIf="datosCargados">
-			<button class="btn btn-success" (click)="crearEmpleado()">
-				Agregar
-			</button>
+		<div class="d-flex justify-content-end gap-2 mb-3" *ngIf="datosCargados">
+			<button class="btn btn-outline-info" (click)="crearArea()">Crear Área</button>
+			<button class="btn btn-success" (click)="crearEmpleado()">Agregar</button>
 		</div>
 
 		<div *ngIf="datosCargados" class="table-responsive">

@@ -161,6 +161,27 @@ app.delete('/empleados/delete/:id', async (req, res) => {
 	}
 });
 
+app.post('/area/save', async (req, res) => {
+	const { nombre } = req.body;
+
+	if (!nombre || nombre.trim() === '') {
+		return res.status(400).json({ error: 'El nombre es obligatorio' });
+	}
+
+	try {
+		const result = await pool.query(
+			`INSERT INTO area (nombre) VALUES ($1) RETURNING *;`,
+			[nombre.trim()]
+		);
+
+		res.status(201).json(result.rows[0]);
+	} catch (error) {
+		console.error('Error al crear área:', error);
+		res.status(500).json({ error: 'Error al crear área' });
+	}
+});
+
+
 app.listen(port, () => {
 	console.log(`Servidor corriendo en http://localhost:${port}`);
 });

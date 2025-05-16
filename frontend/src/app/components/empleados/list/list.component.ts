@@ -55,4 +55,8 @@ export class EmpleadosListComponent {
 	editarEmpleado(id: number) {
 		this.router.navigate(['/empleados/edit', id]);
 	}
+
+	crearArea(): void {
+		this.router.navigate(['/area/create']);
+	}
 }
